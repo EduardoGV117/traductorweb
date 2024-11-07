@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransCodeX</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>TransCodeX</h1>
+        <div class="wrapper">
+            <div class="dropdowns">
+                <div class="dropdown">
+                    <label for="inputLanguage">Convertir de:</label>
+                    <select id="inputLanguage">
+                        <option value="python">Python</option>
+                        <option value="csharp">C#</option>
+                        <option value="cpp">C++</option>
+                        <option value="javascript">JavaScript</option>
+                    </select>
+                </div>
+
+                <div class="textbox">
+                    <label for="codeInput">Ingresa tu codigo aqui:</label>
+                    <textarea id="codeInput" rows="15" placeholder="Escribe tu codigo aqui..."></textarea>
+                </div>
+            </div>
+
+            <button id="convertButton">Convertir</button>
+
+
+            <script>
+                convertButton.addEventListener('click', () => {
+                    const inputLanguage = document.getElementById('inputLanguage').value;
+                    const outputLanguage = document.getElementById('outputLanguage').value;   
+
+                    const codeInput = document.getElementById('codeInput').value;
+
+                    let convertedCode = '';
+
+                    if (inputLanguage === 'python' && outputLanguage === 'csharp') {
+                        convertedCode = convertPythonToCSharp(codeInput);
+                    } else if (inputLanguage === 'python' && outputLanguage === 'javascript') {
+                        convertedCode = convertPythonToJavaScript(codeInput);
+                    } else {
+                        convertedCode = 'La conversión entre estos lenguajes no está soportada aún.';
+                    }
+
+                    document.getElementById('codeOutput').value = convertedCode;
+                });
+            </script>
+              
+            <div class="output">
+                <div class="dropdown">
+                    <label for="outputLanguage">convertir a:</label>
+                    <select id="outputLanguage">
+                        <option value="python">Python</option>
+                        <option value="csharp">C#</option>
+                        <option value="cpp">C++</option>
+                        <option value="javascript">JavaScript</option>
+                    </select>
+                </div>
+
+                <textarea id="codeOutput" rows="15" readonly></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
