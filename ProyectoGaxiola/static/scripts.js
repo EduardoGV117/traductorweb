@@ -2,7 +2,7 @@ function validateCodeStructure(code, language) {
     let errors = [];
 
     if (language === "python") {
-        // Verificar si tiene indentación y uso de ":" en definiciones de funciones y clases.
+        // Verificar si tiene definiciones de función y clase con ":"
         const functionPattern = /def\s+\w+\(.*\):/;
         const classPattern = /class\s+\w+\(.*\):/;
         
@@ -15,7 +15,7 @@ function validateCodeStructure(code, language) {
         }
 
     } else if (language === "csharp") {
-        // Verificar puntos y comas y estructura básica
+        // Verificar estructura básica y presencia de ";", "{}", y palabras clave
         const usingPattern = /using\s+\w+/;
         const namespacePattern = /namespace\s+\w+/;
         const classPattern = /class\s+\w+/;
@@ -41,8 +41,15 @@ function validateCodeStructure(code, language) {
             errors.push("Falta punto y coma ';' en una o más líneas de código.");
         }
 
+        // Verificar que las llaves están en pares balanceados
+        const openBraces = (code.match(/{/g) || []).length;
+        const closeBraces = (code.match(/}/g) || []).length;
+        if (openBraces !== closeBraces) {
+            errors.push("Las llaves '{' y '}' no están balanceadas en C#.");
+        }
+
     } else if (language === "javascript") {
-        // Verificar puntos y comas y estructura básica de funciones
+        // Verificar puntos y comas y estructura de llaves para bloques
         const functionPattern = /function\s+\w+\s*\(/;
         const variablePattern = /(let|const|var)\s+\w+\s*=/;
 
@@ -53,10 +60,19 @@ function validateCodeStructure(code, language) {
         if (!code.includes(";")) {
             errors.push("Falta punto y coma ';' en una o más líneas de código.");
         }
+
+        // Verificar que las llaves están en pares balanceados
+        const openBraces = (code.match(/{/g) || []).length;
+        const closeBraces = (code.match(/}/g) || []).length;
+        if (openBraces !== closeBraces) {
+            errors.push("Las llaves '{' y '}' no están balanceadas en JavaScript.");
+        }
     }
 
     return errors;
 }
+
+
 // Lógica de conversión de Python a JavaScript
 function convertPythonToJavaScript(pythonCode) {
     let jsCode = '';
